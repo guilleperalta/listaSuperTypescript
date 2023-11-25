@@ -31,7 +31,7 @@ const App: React.FC = () => {
 
   const handleAddProduct = () => {
     if (name && quantity > 0) {
-      if (editIndex !== null && price > 0) {
+      if (editIndex !== null) {
         // Edit existing product
         const updatedProducts = [...products]
         updatedProducts[editIndex] = { id: editIndex, name, quantity, price , checked}
