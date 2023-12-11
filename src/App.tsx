@@ -168,8 +168,8 @@ const App: React.FC = () => {
         <div className="grid grid-cols-1 gap-2">
         <div className="grid grid-cols-3 w-full">
           <div className="text-left">Nombre</div>
-          <div className="text-center mr-10">Cantidad</div>
-          <div className="text-right mr-16">Precio</div>
+          <div className="text-center mr-20">Cantidad</div>
+          <div className="text-right mr-20 pr-2">Precio</div>
         </div>
         {products.map((product, index) => (
           !product.checked && (
@@ -186,13 +186,13 @@ const App: React.FC = () => {
                 </div>
               </div>
               <button onClick={() => handleDeleteProduct(index)}>
-                <i className="material-icons text-red-500 ml-1 mt-2">delete</i>
+                <i className="material-icons text-red-500 ml-1 mt-2 text-4xl">delete</i>
               </button>
               <button onClick={() => handleCheckProduct(index)}>
                 {product.checked ? (
-                    <i className="material-icons text-green-400 ml-2 mt-2">check</i>
+                    <i className="material-icons text-green-400 ml-2 mt-2 text-4xl">check</i>
                   ) : (
-                    <i className="material-icons text-gray-600 ml-2 mt-2">check</i>
+                    <i className="material-icons text-gray-600 ml-2 mt-2 text-4xl">check</i>
                 )}
               </button>
             </div>
@@ -213,13 +213,13 @@ const App: React.FC = () => {
                 </div>
               </div>
               <button onClick={() => handleDeleteProduct(index)}>
-                <i className="material-icons text-red-500 ml-1 mt-2">delete</i>
+                <i className="material-icons text-red-500 ml-1 mt-2 text-4xl">delete</i>
               </button>
               <button onClick={() => handleCheckProduct(index)}>
                 {product.checked ? (
-                    <i className="material-icons text-green-400 ml-2 mt-2">check</i>
+                    <i className="material-icons text-green-400 ml-2 mt-2 text-4xl">check</i>
                   ) : (
-                    <i className="material-icons text-gray-600 ml-2 mt-2">check</i>
+                    <i className="material-icons text-gray-600 ml-2 mt-2 text-4xl">check</i>
                 )}
               </button>
             </div>
