@@ -15,7 +15,6 @@ const App: React.FC = () => {
   const [price, setPrice] = useState(0)
   const [checked, setChecked] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
-  const [productsOrderById, setProductsOrderById] = useState<Product[]>([])
   const [editIndex, setEditIndex] = useState<number | null>(null)
   const [nextId, setNextId] = useState<number>(1)
   const inutNombre = useRef<HTMLInputElement>(null)
@@ -25,16 +24,13 @@ const App: React.FC = () => {
     const storedNextId : string | null = localStorage.getItem('nextId')
     storedNextId != null ? setNextId(parseInt(JSON.parse(storedNextId))) : setNextId(1)
     if (storedProducts) {
-      const parsedProducts: Product[] = JSON.parse(storedProducts)
-      setProductsOrderById(parsedProducts.sort((a, b) => b.id - a.id))
-      setProducts(parsedProducts.sort((a, b) => b.id - a.id))
+      setProducts(JSON.parse(storedProducts))
     }
   }, [])
 
   useEffect(() => {
     localStorage.setItem('products', JSON.stringify(products))
     localStorage.setItem('nextId', JSON.stringify(nextId))
-    setProductsOrderById(products.sort((a, b) => b.id - a.id))
   }, [products])
 
   const handleAddProduct = () => {
@@ -50,7 +46,7 @@ const App: React.FC = () => {
         setEditIndex(null)
       } else {
         const newProduct: Product = { id: nextId, name, quantity, price, checked}
-        setProducts([...products, newProduct])
+        setProducts([...products, newProduct].sort((a, b) => b.id - a.id))
         setNextId(nextId + 1)
       }
       setName('')
@@ -198,7 +194,7 @@ const App: React.FC = () => {
             </div>
           )
         ))}
-        {productsOrderById.map((product, index) => (
+        {products.map((product, index) => (
           product.checked && (
             <div key={index} className="flex justify-between">
               <div
