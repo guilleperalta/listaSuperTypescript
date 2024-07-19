@@ -1,10 +1,10 @@
 # Etapa de construcción
-FROM node:alpine AS build
+FROM node:16-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-CMD ["sh", "-c", "npm run dev & php-fpm"]
+RUN npm run build
 
 # Etapa de producción
 FROM nginx:alpine
