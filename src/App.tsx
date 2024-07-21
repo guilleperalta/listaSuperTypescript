@@ -22,12 +22,21 @@ const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [editIndex, setEditIndex] = useState<number | null>(null)
   const inutNombre = useRef<HTMLInputElement>(null)
+  const topApp = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/getp`)
       .then(response => {
-        setProducts(response.data.response)
+        const modifiedProducts = response.data.response.map(
+          (product: Product) => {
+            if (Number(product.price) === 0) {
+              return { ...product, price: 0 }
+            }
+            return { ...product, price: Math.floor(Number(product.price)) }
+          }
+        )
+        setProducts(modifiedProducts)
       })
       .catch(error => {
         console.error(error)
@@ -97,11 +106,11 @@ const App: React.FC = () => {
     if (productToEdit != undefined) {
       setName(productToEdit.name)
       setQuantity(productToEdit.quantity)
-      setPrice(!isNaN(productToEdit.price) ? 0 : productToEdit.price)
+      setPrice(productToEdit.price !== 0 ? productToEdit.price : 0)
       setChecked(productToEdit.checked)
       setEditIndex(productToEdit.id)
     }
-    if (inutNombre.current) {
+    if (inutNombre.current !== null) {
       inutNombre.current.focus()
     }
   }
@@ -206,18 +215,18 @@ const App: React.FC = () => {
           console.error(error)
         })
 
-        // aca borramos todos de la base de datos que esten como checked
-        axios
-          .delete(`${import.meta.env.VITE_API_URL}/deletepchecked`)
-          .then(() => {
-            const updatedProducts = products.filter(
-              product => product.checked === 0
-            )
-            setProducts(updatedProducts)
-          })
-          .catch(error => {
-            console.error(error)
-          })
+      // aca borramos todos de la base de datos que esten como checked
+      axios
+        .delete(`${import.meta.env.VITE_API_URL}/deletepchecked`)
+        .then(() => {
+          const updatedProducts = products.filter(
+            product => product.checked === 0
+          )
+          setProducts(updatedProducts)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     } else {
       console.log('Envío de gasto cancelado.')
     }
@@ -243,7 +252,10 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto p-4 bg-gray-900 text-white w-screen h-screen overflow-y-auto">
+    <div
+      className="mx-auto px-4 py-10 bg-gray-900 text-white w-screen h-screen overflow-y-auto"
+      ref={topApp}
+    >
       <div className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3 flex flex-col m-auto">
         <div className="mb-4">
           <label className="block mb-2">AGREGAR UN PRODUCTO</label>
