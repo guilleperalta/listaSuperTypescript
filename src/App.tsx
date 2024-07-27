@@ -92,9 +92,10 @@ const App: React.FC = () => {
       setPrice(0)
       setChecked(0)
       setEditIndex(null)
-      if (inutNombre.current) {
-        inutNombre.current.focus()
-      }
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Opcional: para un desplazamiento suave
+      })
     }
   }
 
