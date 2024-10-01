@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: image-lista_super:latest
-    restart: unless-stopped
+    restart: always
     container_name: container-lista_super
     ports:
       - "13000:80"
